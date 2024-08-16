@@ -23,7 +23,9 @@
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.18.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "winston": "^3.14.2",
+    "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",

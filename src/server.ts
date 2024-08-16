@@ -1,6 +1,7 @@
 import { Server } from 'http';
 import app from './app';
 import config from './config';
+import logger from './logging/logger';
 
 // Initialize and start the server
 async function main() {
@@ -8,15 +9,15 @@ async function main() {
 
     try {
         server = app.listen(config.serverPort, () => {
-            console.log(`Server is running on port ${config.serverPort}`);
+            logger.info(`Server is running on port ${config.serverPort}`);
         });
 
         // Graceful Shutdown
         const shutdown = (signal: string) => {
-            console.log(`Received ${signal}. Closing server...`);
+            logger.info(`Received ${signal}. Closing server...`);
             if (server) {
                 server.close(() => {
-                    console.log('Server closed gracefully');
+                    logger.info('Server closed gracefully');
                     process.exit(0);
                 });
             } else {
@@ -30,12 +31,12 @@ async function main() {
 
         // Error handling
         process.on('uncaughtException', (error) => {
-            console.error('Uncaught Exception:', error);
+            logger.error('Uncaught Exception:', error);
             shutdown('uncaughtException');
         });
 
         process.on('unhandledRejection', (error) => {
-            console.error('Unhandled Rejection:', error);
+            logger.error('Unhandled Rejection:', error);
             shutdown('unhandledRejection');
         });
 

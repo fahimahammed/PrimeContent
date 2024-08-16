@@ -10,12 +10,20 @@ const prisma = new PrismaClient({
     ],
 });
 
-// Query logging with color and formatting
+// prisma.$on('query', (e) => {
+//     console.log('\x1b[36m%s\x1b[0m', 'Query: ', e.query); // Cyan color for 'Query:'
+//     console.log('\x1b[32m%s\x1b[0m', 'Params: ', JSON.stringify(e.params, null, 2)); // Green color for 'Params:', with pretty-printed JSON
+//     console.log('\x1b[35m%s\x1b[0m', 'Duration: ', e.duration, ' ms'); // Magenta color for 'Duration:'
+// });
 prisma.$on('query', (e) => {
-    console.log("Query: " + e.query);
-    console.log("Params: " + e.params);
-    console.log("Duration: " + e.duration + "ms");
-});
+    const border = '- '.repeat(80); // Adjust the length as needed
+    const margin = ' '.repeat(4); // Adjust the margin as needed
 
+    console.log(`\x1b[36m${border}\x1b[0m`); // Cyan border
+    console.log(`\x1b[36m${margin}Query: \x1b[0m%s`, e.query); // Cyan color for 'Query:' with margin
+    console.log(`\x1b[32m${margin}Params: \x1b[0m%s`, e.params); // Green color for 'Params:' with margin
+    console.log(`\x1b[35m${margin}Duration: \x1b[0m%d ms`, e.duration); // Magenta color for 'Duration:' with margin
+    console.log(`\x1b[36m${border}\x1b[0m`); // Cyan border
+});
 
 export default prisma;
