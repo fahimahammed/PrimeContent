@@ -1,23 +1,30 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { userServices } from './user.service';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import httpStatus from 'http-status';
 
-const getUsers = async (req: Request, res: Response) => {
-    try {
-        const users = await userServices.getAllUsers();
-        res.status(200).json({ success: true, data: users });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to retrieve users', error });
-    }
-};
+const getUsers: RequestHandler = catchAsync(async (req: Request, res: Response) => {
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const user = await userServices.addUser(req.body);
-        res.status(201).json({ success: true, data: user });
-    } catch (error) {
-        next(error);
-    }
-};
+    const users = await userServices.getAllUsers();
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Users retrived!",
+        meta: users.meta,
+        data: users.data
+    });
+});
+
+const createUser: RequestHandler = catchAsync(async (req: Request, res: Response) => {
+    const user = await userServices.addUser(req.body);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "User created successfully!",
+        data: user
+    });
+});
 
 export const userControllers = {
     createUser,
