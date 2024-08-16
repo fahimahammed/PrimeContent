@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import httpStatus from 'http-status';
 import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
 const app: Application = express();
 
@@ -38,6 +39,9 @@ app.get('/api/v1/test', (req: Request, res: Response) => {
         }
     });
 });
+
+// Error handler
+app.use(globalErrorHandler);
 
 // Handle 404 Errors
 app.use((req: Request, res: Response, next: NextFunction) => {
