@@ -3,6 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import config from "../../config";
 
 // Define a type for error details to capture different kinds of error details
 interface ErrorDetails {
@@ -50,7 +51,8 @@ const globalErrorHandler = (
     res.status(statusCode).json({
         success,
         message,
-        error: errorDetails
+        error: errorDetails,
+        stack: config.environment === 'development' ? err?.stack : null,
     });
 };
 

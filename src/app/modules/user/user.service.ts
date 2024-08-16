@@ -1,6 +1,7 @@
 import prisma from "../../../db/prismaClient";
 
 const getAllUsers = async () => {
+
     const users = await prisma.user.findMany();
     const total = await prisma.user.count();
     return {
