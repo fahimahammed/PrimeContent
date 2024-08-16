@@ -7,12 +7,12 @@ const logger = winston.createLogger({
     format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     transports: [
         new DailyRotateFile({
-            filename: path.join(process.cwd(), 'logs', 'winston', 'success', 'success-%DATE%.log'),
+            filename: path.join(process.cwd(), 'logs', 'success', 'success-%DATE%.log'),
             datePattern: 'YYYY-MM-DD',
             level: 'info'
         }),
         new DailyRotateFile({
-            filename: path.join(process.cwd(), 'logs', 'winston', 'error', 'error-%DATE%.log'),
+            filename: path.join(process.cwd(), 'logs', 'error', 'error-%DATE%.log'),
             datePattern: 'YYYY-MM-DD',
             level: 'error'
         }),
