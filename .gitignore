@@ -1,4 +1,52 @@
-node_modules
-dist
-build
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# TypeScript
+dist/
+*.tsbuildinfo
+
+# Environment Variables
 .env
+
+# Log files
+logs/
+*.log
+
+# Prisma
+prisma/generated/
+prisma/.env
+
+# PostgreSQL
+*.pgdata
+
+# Nodemailer
+*.nodemailer.json
+
+# ESLint
+.eslintcache
+
+# Prettier
+.prettierignore
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# OS specific
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
