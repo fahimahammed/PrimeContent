@@ -52,7 +52,7 @@ const globalErrorHandler = (
         success,
         message,
         error: errorDetails,
-        stack: config.environment === 'development' ? err?.stack : null,
+        stack: config.environment === 'development' ? (err as Error).stack : null,
     });
 };
 

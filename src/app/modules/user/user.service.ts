@@ -14,9 +14,9 @@ const getAllUsers = async () => {
     };
 };
 
-const addUser = async (userData: { name: string; email: string }) => {
+const addUser = async (userData: { name: string; email: string, password: "" }) => {
     return await prisma.user.create({
-        data: userData,
+        data: userData
     });
 };
 
