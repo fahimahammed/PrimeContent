@@ -1,0 +1,29 @@
+name: CI - Build and Lint
+
+on:
+  pull_request:
+    branches:
+      - main
+      - stage
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run TypeScript build
+        run: yarn build
+
+      - name: Run ESLint
+        run: yarn lint
