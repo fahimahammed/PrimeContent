@@ -11,11 +11,7 @@ const prisma = new PrismaClient({
     ],
 });
 
-// prisma.$on('query', (e) => {
-//     console.log('\x1b[36m%s\x1b[0m', 'Query: ', e.query); // Cyan color for 'Query:'
-//     console.log('\x1b[32m%s\x1b[0m', 'Params: ', JSON.stringify(e.params, null, 2)); // Green color for 'Params:', with pretty-printed JSON
-//     console.log('\x1b[35m%s\x1b[0m', 'Duration: ', e.duration, ' ms'); // Magenta color for 'Duration:'
-// });
+
 if (config.environment === "development") {
     prisma.$on('query', (e) => {
         const border = '- '.repeat(80); // Adjust the length as needed
