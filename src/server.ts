@@ -1,7 +1,7 @@
-import { Server } from 'http';
-import app from './app';
-import config from './config';
-import logger from './logging/logger';
+import { Server } from "http";
+import app from "./app";
+import config from "./config";
+import logger from "./logging/logger";
 
 // Initialize and start the server
 async function main() {
@@ -17,7 +17,7 @@ async function main() {
       logger.info(`Received ${signal}. Closing server...`);
       if (server) {
         server.close(() => {
-          logger.info('Server closed gracefully');
+          logger.info("Server closed gracefully");
           process.exit(0);
         });
       } else {
@@ -26,21 +26,21 @@ async function main() {
     };
 
     // Listen for termination signals
-    process.on('SIGTERM', () => shutdown('SIGTERM'));
-    process.on('SIGINT', () => shutdown('SIGINT'));
+    process.on("SIGTERM", () => shutdown("SIGTERM"));
+    process.on("SIGINT", () => shutdown("SIGINT"));
 
     // Error handling
-    process.on('uncaughtException', (error) => {
-      logger.error('Uncaught Exception:', error);
-      shutdown('uncaughtException');
+    process.on("uncaughtException", (error) => {
+      logger.error("Uncaught Exception:", error);
+      shutdown("uncaughtException");
     });
 
-    process.on('unhandledRejection', (error) => {
-      logger.error('Unhandled Rejection:', error);
-      shutdown('unhandledRejection');
+    process.on("unhandledRejection", (error) => {
+      logger.error("Unhandled Rejection:", error);
+      shutdown("unhandledRejection");
     });
   } catch (error) {
-    logger.error('Error starting server:', error);
+    logger.error("Error starting server:", error);
     process.exit(1);
   }
 }

@@ -1,8 +1,8 @@
-import { Request, RequestHandler, Response } from 'express';
-import { userServices } from './user.service';
-import catchAsync from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
-import httpStatus from 'http-status';
+import { Request, RequestHandler, Response } from "express";
+import { userServices } from "./user.service";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import httpStatus from "http-status";
 
 const getUsers: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ const getUsers: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Users retrived!',
+      message: "Users retrived!",
       meta: users.meta,
       data: users.data,
     });
@@ -23,7 +23,7 @@ const createUser: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'User created successfully!',
+      message: "User created successfully!",
       data: user,
     });
   },

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import jwt, { JwtPayload, Secret, SignOptions } from 'jsonwebtoken';
+import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
 
 /**
  * Generates a JWT token.
@@ -16,7 +16,7 @@ const generateToken = (
   expiresIn: string,
 ): string => {
   const options: SignOptions = {
-    algorithm: 'HS256',
+    algorithm: "HS256",
     expiresIn,
   };
 
@@ -35,7 +35,7 @@ const verifyToken = (token: string, secret: Secret): JwtPayload => {
   try {
     return jwt.verify(token, secret) as JwtPayload;
   } catch (error) {
-    throw new jwt.JsonWebTokenError('Invalid or expired token');
+    throw new jwt.JsonWebTokenError("Invalid or expired token");
   }
 };
 

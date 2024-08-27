@@ -1,4 +1,4 @@
-import prisma from '../../../db/prismaClient';
+import prisma from "../../../db/prismaClient";
 
 const getAllUsers = async () => {
   const users = await prisma.user.findMany();
@@ -16,7 +16,7 @@ const getAllUsers = async () => {
 const addUser = async (userData: {
   name: string;
   email: string;
-  password: '';
+  password: "";
 }) => {
   return await prisma.user.create({
     data: userData,

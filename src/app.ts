@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import express, { Application, NextFunction, Request, Response } from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import httpStatus from 'http-status';
-import router from './app/routes';
-import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import express, { Application, NextFunction, Request, Response } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import httpStatus from "http-status";
+import router from "./app/routes";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 
 const app: Application = express();
 
 // Middleware Setup
 app.use(
   cors({
-    origin: 'http://localhost:3000', // specify allowed origins
+    origin: "http://localhost:3000", // specify allowed origins
     credentials: true, // allow credentials (cookies, authorization headers, etc.)
   }),
 );
@@ -21,21 +21,21 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/v1', router);
+app.use("/api/v1", router);
 
 // Test Route
-app.get('/api/v1/test', (req: Request, res: Response) => {
+app.get("/api/v1/test", (req: Request, res: Response) => {
   console.log(req.socket.remoteAddress);
   const userIp =
-    (req.headers['x-forwarded-for'] as string) || req.ip || 'Unknown IP';
-  const userAgent = req.headers['user-agent'] || 'Unknown User-Agent';
+    (req.headers["x-forwarded-for"] as string) || req.ip || "Unknown IP";
+  const userAgent = req.headers["user-agent"] || "Unknown User-Agent";
   const requestTime = new Date().toISOString();
 
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'Test Message!',
+    message: "Test Message!",
     data: {
-      message: 'Working!!',
+      message: "Working!!",
       ip: userIp,
       userAgent: userAgent,
       requestTime: requestTime,
@@ -50,10 +50,10 @@ app.use(globalErrorHandler);
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: 'API NOT FOUND!',
+    message: "API NOT FOUND!",
     error: {
       path: req.originalUrl,
-      message: 'The requested path is not found!',
+      message: "The requested path is not found!",
     },
   });
 });
@@ -63,7 +63,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.status(err.status || httpStatus.INTERNAL_SERVER_ERROR).json({
     success: false,
-    message: err.message || 'Internal Server Error',
+    message: err.message || "Internal Server Error",
     error: err,
   });
 });

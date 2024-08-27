@@ -1,9 +1,9 @@
-import path from 'path';
-import winston from 'winston';
-import DailyRotateFile from 'winston-daily-rotate-file';
+import path from "path";
+import winston from "winston";
+import DailyRotateFile from "winston-daily-rotate-file";
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.json(),
@@ -12,20 +12,20 @@ const logger = winston.createLogger({
     new DailyRotateFile({
       filename: path.join(
         process.cwd(),
-        'logs',
-        'success',
-        'success-%DATE%.log',
+        "logs",
+        "success",
+        "success-%DATE%.log",
       ),
-      datePattern: 'YYYY-MM-DD',
-      level: 'info',
+      datePattern: "YYYY-MM-DD",
+      level: "info",
     }),
     new DailyRotateFile({
-      filename: path.join(process.cwd(), 'logs', 'error', 'error-%DATE%.log'),
-      datePattern: 'YYYY-MM-DD',
-      level: 'error',
+      filename: path.join(process.cwd(), "logs", "error", "error-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      level: "error",
     }),
     new winston.transports.Console({
-      stderrLevels: ['error'],
+      stderrLevels: ["error"],
     }),
   ],
 });
