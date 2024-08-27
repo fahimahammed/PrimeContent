@@ -11,8 +11,7 @@ const prisma = new PrismaClient({
     ],
 });
 
-
-if (config.environment === "development") {
+if (config.environment === 'development') {
     prisma.$on('query', (e) => {
         const border = '- '.repeat(80); // Adjust the length as needed
         const margin = ' '.repeat(4); // Adjust the margin as needed
@@ -23,6 +22,6 @@ if (config.environment === "development") {
         console.log(`\x1b[35m${margin}Duration: \x1b[0m%d ms`, e.duration); // Magenta color for 'Duration:' with margin
         console.log(`\x1b[36m${border}\x1b[0m`); // Cyan border
     });
-};
+}
 
 export default prisma;
