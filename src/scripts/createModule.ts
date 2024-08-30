@@ -23,10 +23,9 @@ function createModule(moduleName: string): void {
         [`${moduleName}.controller.ts`]: `
 import { Request, Response } from 'express';
 import { ${capitalize(moduleName)}Service } from './${moduleName}.service';
-import catchAsync from '../utils/catchAsync';
-import sendResponse from '../utils/sendResponse';
 import httpStatus from 'http-status';
-
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
 
 const create${capitalize(moduleName)}Handler = catchAsync(async (req: Request, res: Response) => {
     const data = await ${capitalize(moduleName)}Service.create${capitalize(moduleName)}(req.body);
@@ -38,7 +37,7 @@ const create${capitalize(moduleName)}Handler = catchAsync(async (req: Request, r
     });
 });
 
- const getAll${capitalize(moduleName)}sHandler = catchAsync(async (req: Request, res: Response) => {
+const getAll${capitalize(moduleName)}sHandler = catchAsync(async (req: Request, res: Response) => {
     const result = await ${capitalize(moduleName)}Service.getAll${capitalize(moduleName)}s();
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -49,19 +48,19 @@ const create${capitalize(moduleName)}Handler = catchAsync(async (req: Request, r
     });
 });
 
- const get${capitalize(moduleName)}ByIdHandler = catchAsync(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
+const get${capitalize(moduleName)}ByIdHandler = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
     const data = await ${capitalize(moduleName)}Service.get${capitalize(moduleName)}ById(id);
-        sendResponse(res, {
-            statusCode: httpStatus.OK,
-            success: true,
-            message: '${capitalize(moduleName)} retrieved successfully',
-            data,
-        });
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: '${capitalize(moduleName)} retrieved successfully',
+        data,
+    });
 });
 
- const update${capitalize(moduleName)}Handler = catchAsync(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
+const update${capitalize(moduleName)}Handler = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
     const data = await ${capitalize(moduleName)}Service.update${capitalize(moduleName)}(id, req.body);
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -71,13 +70,14 @@ const create${capitalize(moduleName)}Handler = catchAsync(async (req: Request, r
     });
 });
 
- const delete${capitalize(moduleName)}Handler = catchAsync(async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
-    await ${capitalize(moduleName)}Service.delete${capitalize(moduleName)}(id);
+const delete${capitalize(moduleName)}Handler = catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const result = await ${capitalize(moduleName)}Service.delete${capitalize(moduleName)}(id);
     sendResponse(res, {
         statusCode: httpStatus.NO_CONTENT,
         success: true,
         message: '${capitalize(moduleName)} deleted successfully',
+        data: result
     });
 });
 
@@ -108,28 +108,34 @@ import { PrismaClient, ${capitalize(moduleName)} } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
- const create${capitalize(moduleName)} = async (data: Omit<${capitalize(moduleName)}, 'id'>): Promise<${capitalize(moduleName)}> => {
+const create${capitalize(moduleName)} = async (data: Omit<${capitalize(moduleName)}, 'id'>): Promise<${capitalize(moduleName)}> => {
     return prisma.${moduleName}.create({ data });
 };
 
- const getAll${capitalize(moduleName)}s = async (filters: Record<string, any>, options: Record<string, any>): Promise<{ meta: any, data: ${capitalize(moduleName)}[] }> => {
-    // Implement filtering, pagination, and sorting logic here
+const getAll${capitalize(moduleName)}s = async (): Promise<{ meta: any, data: ${capitalize(moduleName)}[] }> => {
     const data = await prisma.${moduleName}.findMany();
-    return { meta: {}, data };
+    return {
+        meta: {
+            page: 1,
+            limit: 10,
+            total: data.length
+        },
+        data
+    };
 };
 
- const get${capitalize(moduleName)}ById = async (id: number): Promise<${capitalize(moduleName)} | null> => {
+const get${capitalize(moduleName)}ById = async (id: string): Promise<${capitalize(moduleName)} | null> => {
     return prisma.${moduleName}.findUnique({ where: { id } });
 };
 
- const update${capitalize(moduleName)} = async (id: number, data: Partial<${capitalize(moduleName)}>): Promise<${capitalize(moduleName)}> => {
+const update${capitalize(moduleName)} = async (id: string, data: Partial<${capitalize(moduleName)}>): Promise<${capitalize(moduleName)}> => {
     return prisma.${moduleName}.update({
         where: { id },
         data,
     });
 };
 
- const delete${capitalize(moduleName)} = async (id: number): Promise<${capitalize(moduleName)}> => {
+const delete${capitalize(moduleName)} = async (id: string): Promise<${capitalize(moduleName)}> => {
     return prisma.${moduleName}.delete({ where: { id } });
 };
 
