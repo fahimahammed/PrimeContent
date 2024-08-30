@@ -15,7 +15,8 @@
     "lint": "eslint src --ignore-path .eslintignore --ext .ts",
     "lint:fix": "npx eslint src --fix",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
-    "prettier:fix": "npx prettier --write src"
+    "prettier:fix": "npx prettier --write src",
+    "createModule": "npx ts-node ./src/scripts/createmodule.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
