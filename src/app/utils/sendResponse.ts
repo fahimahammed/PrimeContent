@@ -30,7 +30,7 @@ const sendResponse = <T>(
   res.status(statusCode).json({
     success,
     message,
-    meta: meta ?? null,
+    meta: meta || null || undefined,
     data: data ?? null,
   });
 };

@@ -1,9 +1,20 @@
 import { Category } from '@prisma/client';
 import prisma from '../../../db/prismaClient';
+import { Request } from 'express';
+import { IUploadFile } from '../../interfaces/file';
+import { FileUploadHelper } from '../../utils/fileUploader';
 
 
-const createCategory = async (data: Omit<Category, 'id'>): Promise<Category> => {
-    return prisma.category.create({ data });
+const createCategory = async (req: Request): Promise<Category> => {
+    const file = req.file as IUploadFile;
+
+    if (file) {
+        const categoryIcon = await FileUploadHelper.uploadToCloudinary(file);
+        req.body.icon = categoryIcon?.secure_url;
+    }
+    return prisma.category.create({
+        data: req.body
+    });
 };
 
 const getAllCategorys = async () => {

@@ -13,7 +13,7 @@ const prisma = new PrismaClient({
 
 if (config.environment === "development") {
   prisma.$on("query", (e) => {
-    const border = "- ".repeat(80); // Adjust the length as needed
+    const border = "- ".repeat(50); // Adjust the length as needed
     const margin = " ".repeat(4); // Adjust the margin as needed
 
     console.log(`\x1b[36m${border}\x1b[0m`); // Cyan border
