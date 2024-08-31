@@ -28,4 +28,9 @@ export default {
     paymentApiUrl: process.env.SSL_PAYMENT_API_URL,
     validationApiUrl: process.env.SSL_VALIDATION_API_URL,
   },
+  cloudinary: {
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+  },
 };
