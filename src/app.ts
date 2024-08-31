@@ -5,8 +5,24 @@ import cookieParser from "cookie-parser";
 import httpStatus from "http-status";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
+import rateLimit from "express-rate-limit";
 
 const app: Application = express();
+
+// Rate Limiting Configuration
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (15 minutes)
+  message: {
+    success: false,
+    statusCode: httpStatus.TOO_MANY_REQUESTS,
+    message: "Too many requests, please try again later.",
+  },
+  headers: true, // Enable rate limit headers
+});
+
+// Apply the rate limiter to all API requests
+app.use("/api/v1/", apiLimiter);
 
 // Middleware Setup
 app.use(
